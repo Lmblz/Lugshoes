@@ -1,0 +1,274 @@
+/* region general styles */
+h1, h2, h3, p, span, button {
+    font-family: 'Poppins', sans-serif;
+    color: #142E2C;
+}
+
+html {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+span, button {
+    font-size: 24px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+h2 {
+    margin: 0;
+}
+
+body {
+    height: 100%;
+}
+
+main {
+    display: grid;
+}
+
+main aside .title .price {
+    display: flex;
+    align-items: center;
+}
+
+main aside .title .price span {
+    padding: 6px 18px;
+    background-color: #142E2C;
+    color: white;
+    gap: 10px;
+    border-radius: 6px;
+}
+
+main aside .color {
+    display: flex;
+}
+
+main aside .color * {
+    margin-right: 40px;
+}
+
+main aside .color * {
+    width: 40px;
+    height: 40px;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    text-indent: -9999px;
+    cursor: pointer;
+    transition: opacity .5s;
+}
+
+main aside .color .green {
+    background: #65CA8D;
+}
+main aside .color .blue {
+    background: #56AEFF;
+}
+main aside .color .yellow {
+    background: #FFE380;
+}
+main aside .color .red {
+    background: #FF5858;
+}
+
+main aside .color .active {
+    position: relative;
+}
+
+main aside .color .active:after {
+    content:'abc';
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    background: white;
+    height: 20px;
+    width: 20px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+main aside .color *:hover {
+    opacity: 50%;
+}
+
+main aside .size {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+main aside .size * {
+    padding: 2px 21px;
+    border: 3px solid #142E2C;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    transition: opacity .5s;
+}
+
+main aside .size *:hover {
+    opacity: 50%;
+}
+
+main aside .size .active {
+    background: #142E2C;
+    color: white;
+}
+
+main aside .size .unavailable {
+    opacity: 50%;
+}
+
+main aside .button button.available {
+    background: #65CA8D;
+    transition: opacity .5s;
+}
+
+main aside .button button.available:hover {
+    opacity: 50%;
+}
+
+main aside .button button.unavailable {
+    background: #D5D5D5;
+}
+
+main aside .button button {
+    width: 315px;
+    height: 60px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    border: none;
+    color: white;
+}
+/* endregion */
+
+/* region desktop */
+@media (min-width: 1241px) {
+    h2 {
+        font-size: 48px;
+        margin: 0;
+    }
+
+    p {
+        font-size: 18px;
+        line-height: 29px;
+    }
+
+    main {
+        grid-template-columns: auto auto;
+        align-items: center;
+        height: 100%;
+        padding: 0 163px 0 200px;
+    }
+
+    main .picture {
+        margin-right: 80px;
+    }
+
+    main.picture img {
+        width: 480px;
+    }
+
+    main aside .title {
+        display: flex;
+        margin-bottom: 30px;
+    }
+
+    main aside .title h2 {
+        padding-right: 30px;
+    }
+
+    main aside .color {
+        margin-bottom: 50px;
+    }
+
+    main aside .size * {
+        margin-right: 15px;
+    }
+
+    main aside .size .forty-six {
+        margin: 0;
+    }
+
+    main aside .size {
+        margin-bottom: 55px;
+    }
+
+    main aside .desc {
+        margin-bottom: 40px;
+    }
+
+}
+/* endregion */
+
+/* region mobile 1240px */
+@media (max-width: 1240px) {
+    body {
+        margin: 40px 30px;
+    }
+
+    main {
+        grid-template-rows: auto auto;
+    }
+
+    main .picture {
+        display: flex;
+        justify-content: center;
+        margin: 40px 0;
+    }
+
+    main aside {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    main aside .title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    main aside .title h2 {
+        margin-bottom: 10px;
+        font-size: 36px;
+        font-weight: 600;
+    }
+
+    main aside .title {
+        margin-bottom: 50px;
+    }
+
+    main aside .color {
+        margin-bottom: 40px;
+    }
+
+    main aside .color .red {
+        margin: 0;
+    }
+
+    main aside .size {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+    }
+    
+    main aside .desc {
+        margin-bottom: 50px;
+    }
+
+    main aside .desc p {
+        font-size: 14px;
+        margin: 0;
+    }
+}
+
+@media (max-width: 625px) {
+    main .picture img {
+        width: 75%;
+    }
+}
+/* endregion */
