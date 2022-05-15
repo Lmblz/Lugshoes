@@ -8,48 +8,97 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <script src="functions.js"></script>
 </head>
 <body>
-    <main>
-        <div class="picture">
-            <img src="css/img/shoes-green.png" alt="">
+<main>
+    <div class="picture">
+        <img src="css/img/shoes-green.png" alt="">
+    </div>
+    <aside>
+        <div class="title">
+            <h2></h2>
+            <div class="price">
+                <span>120€</span>
+            </div>
         </div>
-        <aside>
-            <div class="title">
-                <h2>Lugshoes</h2>
-                <div class="price">
-                    <span>120€</span>
-                </div>
+        <div class="color">
+            <div class="green active" id="green" onclick="colorClicked(this)">
+                <span>green</span>
             </div>
-            <div class="color">
-                <div class="green active">
-                    <span>green</span>
-                </div>
-                <div class="blue">
-                    <span>blue</span>
-                </div>
-                <div class="yellow">
-                    <span>yellow</span>
-                </div>
-                <div class="red">
-                    <span>red</span>
-                </div>
+            <div class="blue inactive" id="blue" onclick="colorClicked(this)">
+                <span>blue</span>
             </div>
-            <div class="size">
-                <span class="forty-two active">42</span>
-                <span class="forty-three unavailable">43</span>
-                <span class="forty-four">44</span>
-                <span class="forty-five">45</span>
-                <span class="forty-six">46</span>
+            <div class="yellow inactive" id="yellow" onclick="colorClicked(this)">
+                <span>yellow</span>
             </div>
-            <div class="desc">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque gravida amet consectetur aliquet. Diam nulla potenti cursus aenean aliquet ipsum nec sit ultrices. Quis ultrices non quam orci, mattis non.</p>
+            <div class="red inactive" id="red" onclick="colorClicked(this)">
+                <span>red</span>
             </div>
-            <div class="button">
-                <button class="available">Add to cart</button>
-            </div>
-        </aside>
-    </main>
+        </div>
+        <div class="size">
+            <span class="forty-two active" onclick="sizeClicked(this)">42</span>
+            <span class="forty-three unavailable" onclick="sizeClicked(this)">43</span>
+            <span class="forty-four inactive" onclick="sizeClicked(this)">44</span>
+            <span class="forty-five inactive" onclick="sizeClicked(this)">45</span>
+            <span class="forty-six inactive" onclick="sizeClicked(this)">46</span>
+        </div>
+        <div class="desc">
+            <p><!--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque gravida amet consectetur aliquet. Diam nulla potenti cursus aenean aliquet ipsum nec sit ultrices. Quis ultrices non quam orci, mattis non.--></p>
+        </div>
+        <div class="button">
+            <button id="ajaxButton" type="button" class="available">Add to cart</button>
+        </div>
+    </aside>
+</main>
 </body>
+<script>
+    function colorClicked(myColor) {
+        var img = document.querySelector('.picture > img');
+        var colorActive = document.querySelector('.color > .active');
+        id = myColor.id;
+        console.log(id)
+
+        if (myColor.classList[1] === 'inactive') {
+            colorActive.classList.add('inactive');
+            colorActive.classList.remove('active');
+
+            myColor.classList.add('active');
+            myColor.classList.remove('inactive');
+        }
+
+        var getColor = new XMLHttpRequest();
+        getColor.open('GET', 'https://lugus-hiring.frb.io/product', true);
+
+        getColor.onload = function () {
+            var data = JSON.parse(getColor.responseText);
+            for (i = 0; i < 20; i++) {
+                var colorVariant = data.product.variants[i].color
+                if (colorVariant === id) {
+                    var variantActive = data.product.variants[i];
+                    console.log(variantActive.image);
+                    img.src = variantActive.image;
+                    break;
+
+                }
+            }
+        }
+
+        getColor.send();
+    }
+
+    function sizeClicked(mySize) {
+        var sizeActive = document.querySelector('.size > .active');
+
+        if (mySize.classList[1] === 'inactive') {
+            sizeActive.classList.add('inactive');
+            sizeActive.classList.remove('active');
+
+            mySize.classList.add('active');
+            mySize.classList.remove('inactive');
+        }
+    }
+
+</script>
+
 </html>
