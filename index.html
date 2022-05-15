@@ -37,17 +37,17 @@
             </div>
         </div>
         <div class="size">
-            <span class="forty-two active" id="42" onclick="sizeClicked(this)">42</span>
-            <span class="forty-three inactive" id="43" onclick="sizeClicked(this)">43</span>
-            <span class="forty-four inactive" id="44" onclick="sizeClicked(this)">44</span>
-            <span class="forty-five inactive" id="45" onclick="sizeClicked(this)">45</span>
-            <span class="forty-six inactive" id="46" onclick="sizeClicked(this)">46</span>
+            <span class="forty-two active available" id="42" onclick="sizeClicked(this)">42</span>
+            <span class="forty-three inactive available" id="43" onclick="sizeClicked(this)">43</span>
+            <span class="forty-four inactive unavailable" id="44" onclick="sizeClicked(this)">44</span>
+            <span class="forty-five inactive available" id="45" onclick="sizeClicked(this)">45</span>
+            <span class="forty-six inactive avalaible" id="46" onclick="sizeClicked(this)">46</span>
         </div>
         <div class="desc">
             <p><!--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque gravida amet consectetur aliquet. Diam nulla potenti cursus aenean aliquet ipsum nec sit ultrices. Quis ultrices non quam orci, mattis non.--></p>
         </div>
         <div class="button">
-            <button id="ajaxButton" type="button" class="available">Add to cart</button>
+            <button id="btn" type="button" class="available">Add to cart</button>
         </div>
     </aside>
 </main>
@@ -87,13 +87,22 @@
                         console.log(variantActive.size);*/
 
                         var sizeNoStock = document.getElementById(variantActive.size);
+
                         sizeNoStock.classList.add('unavailable');
                         sizeNoStock.classList.remove('active');
+                        sizeNoStock.classList.remove('available');
 
-                        document.getElementById('46').classList.add('active');
+
+                        /*document.getElementById('46').classList.add('active');*/
 
                     } else {
                         console.log(variantActive.size + ' ' + variantActive.price);
+
+                        var sizeStock = document.getElementById(variantActive.size);
+                        /*console.log('abc : ' + sizeStock);*/
+                        sizeStock.classList.add('available');
+                        sizeStock.classList.remove('unavailable');
+
 
                     }
                 }
@@ -104,6 +113,7 @@
 
     function sizeClicked(mySize) {
         var sizeActive = document.querySelector('.size > .active');
+        var btn = document.getElementById('btn');
 
         if (mySize.classList[1] === 'inactive') {
             sizeActive.classList.add('inactive');
@@ -119,15 +129,28 @@
         getSize.onload = function () {
             var data = JSON.parse(getSize.responseText);
             var colorActive = document.querySelector('.color > .active').classList[0];
-            console.log(mySize.id);
-            console.log(colorActive);
+            /*console.log(mySize.id);
+            console.log(colorActive);*/
 
             for (i = 0; i < 20; i++) {
                 var variants = data.product.variants[i];
                 if (variants.size === mySize.id && variants.color === colorActive) {
-                    console.log(variants.price);
+                    /*console.log(variants.price);
+                    console.log(variants.price.replace('.00', '€'));*/
                     var editPrice = document.querySelector('.price > span');
-                    editPrice.textContent = variants.price + '€';
+                    editPrice.textContent = variants.price.replace('.00', '€');
+                    console.log(data.product.variants[i].quantity)
+                    var quantity = data.product.variants[i].quantity;
+
+                    if (quantity > 0) {
+                        btn.classList.add('available');
+                        btn.textContent = 'Add to cart';
+                        btn.classList.remove('unavailable');
+                    } else {
+                        btn.classList.add('unavailable');
+                        btn.textContent = 'Out of stock';
+                        btn.classList.remove('available');
+                    }
                 }
             }
         }
