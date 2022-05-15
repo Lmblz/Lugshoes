@@ -131,6 +131,7 @@ main aside .button button.available:hover {
 
 main aside .button button.unavailable {
     background: #D5D5D5;
+    cursor: inherit;
 }
 
 main aside .button button {

@@ -1,8 +1,6 @@
 var request = new XMLHttpRequest();
 request.open('GET', 'https://lugus-hiring.frb.io/product', true);
 
-
-
 window.onload = function() {
     request.onload = function() {
         var donnees = JSON.parse(request.responseText);

@@ -47,17 +47,18 @@
             <p><!--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque gravida amet consectetur aliquet. Diam nulla potenti cursus aenean aliquet ipsum nec sit ultrices. Quis ultrices non quam orci, mattis non.--></p>
         </div>
         <div class="button">
-            <button id="btn" type="button" class="available">Add to cart</button>
+            <button id="btn" type="submit" class="available">Add to cart</button>
         </div>
     </aside>
 </main>
 </body>
 <script>
+
     function colorClicked(myColor) {
         var img = document.querySelector('.picture > img');
         var colorActive = document.querySelector('.color > .active');
         id = myColor.id;
-        console.log(id)
+        /*console.log(id)*/
 
         if (myColor.classList[1] === 'inactive') {
             colorActive.classList.add('inactive');
@@ -78,7 +79,7 @@
                 if (colorVariant === id) {
                     var variantActive = data.product.variants[i];
                     /*console.log(i);*/
-                    /*img.src = variantActive.image;*/
+                    img.src = variantActive.image;
                     /*break;*/
 
                     if (variantActive.quantity === 0) {
@@ -139,22 +140,23 @@
                     console.log(variants.price.replace('.00', '€'));*/
                     var editPrice = document.querySelector('.price > span');
                     editPrice.textContent = variants.price.replace('.00', '€');
-                    console.log(data.product.variants[i].quantity)
+                    /*console.log(data.product.variants[i].quantity);*/
                     var quantity = data.product.variants[i].quantity;
 
                     if (quantity > 0) {
                         btn.classList.add('available');
                         btn.textContent = 'Add to cart';
                         btn.classList.remove('unavailable');
+                        btn.disabled = false;
                     } else {
                         btn.classList.add('unavailable');
                         btn.textContent = 'Out of stock';
                         btn.classList.remove('available');
+                        btn.disabled = true;
                     }
                 }
             }
         }
-
         getSize.send();
     }
 
