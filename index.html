@@ -58,7 +58,6 @@
         var img = document.querySelector('.picture > img');
         var colorActive = document.querySelector('.color > .active');
         id = myColor.id;
-        /*console.log(id)*/
 
         if (myColor.classList[1] === 'inactive') {
             colorActive.classList.add('inactive');
@@ -78,33 +77,18 @@
                 var quantityVariant = data.product.variants[i].size;
                 if (colorVariant === id) {
                     var variantActive = data.product.variants[i];
-                    /*console.log(i);*/
                     img.src = variantActive.image;
-                    /*break;*/
 
                     if (variantActive.quantity === 0) {
-                        /*console.log('nostock');
-                        console.log(i);
-                        console.log(variantActive.size);*/
-
                         var sizeNoStock = document.getElementById(variantActive.size);
 
                         sizeNoStock.classList.add('unavailable');
                         sizeNoStock.classList.remove('active');
                         sizeNoStock.classList.remove('available');
-
-
-                        /*document.getElementById('46').classList.add('active');*/
-
                     } else {
-                        console.log(variantActive.size + ' ' + variantActive.price);
-
                         var sizeStock = document.getElementById(variantActive.size);
-                        /*console.log('abc : ' + sizeStock);*/
                         sizeStock.classList.add('available');
                         sizeStock.classList.remove('unavailable');
-
-
                     }
                 }
             }
@@ -130,17 +114,12 @@
         getSize.onload = function () {
             var data = JSON.parse(getSize.responseText);
             var colorActive = document.querySelector('.color > .active').classList[0];
-            /*console.log(mySize.id);
-            console.log(colorActive);*/
 
             for (i = 0; i < 20; i++) {
                 var variants = data.product.variants[i];
                 if (variants.size === mySize.id && variants.color === colorActive) {
-                    /*console.log(variants.price);
-                    console.log(variants.price.replace('.00', '€'));*/
                     var editPrice = document.querySelector('.price > span');
                     editPrice.textContent = variants.price.replace('.00', '€');
-                    /*console.log(data.product.variants[i].quantity);*/
                     var quantity = data.product.variants[i].quantity;
 
                     if (quantity > 0) {
@@ -160,7 +139,31 @@
         getSize.send();
     }
 
+    document.getElementById('btn').addEventListener('click', makeRequest)
 
+    function makeRequest() {
+        httpRequest = new XMLHttpRequest();
+        console.log('a')
+        if (!httpRequest) {
+            alert('Abandon :( Impossible de créer une instance de XMLHTTP');
+            console.log('b')
+        }
+        httpRequest.onreadystatechange = alertContents;
+        httpRequest.open('POST', 'https://lugus-hiring.frb.io/cart/add');
+        httpRequest.send();
+        console.log('c')
+    }
+
+    function alertContents() {
+        console.log('d')
+        if (httpRequest.readyState === XMLHttpRequest.DONE) {
+            if (httpRequest.status === 200) {
+                alert(httpRequest.responseText);
+            } else {
+                alert('Il y a eu un problème avec la requête.');
+            }
+        }
+    }
 </script>
 
 </html>
