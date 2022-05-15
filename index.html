@@ -37,11 +37,11 @@
             </div>
         </div>
         <div class="size">
-            <span class="forty-two active" onclick="sizeClicked(this)">42</span>
-            <span class="forty-three unavailable" onclick="sizeClicked(this)">43</span>
-            <span class="forty-four inactive" onclick="sizeClicked(this)">44</span>
-            <span class="forty-five inactive" onclick="sizeClicked(this)">45</span>
-            <span class="forty-six inactive" onclick="sizeClicked(this)">46</span>
+            <span class="forty-two active" id="42" onclick="sizeClicked(this)">42</span>
+            <span class="forty-three inactive" id="43" onclick="sizeClicked(this)">43</span>
+            <span class="forty-four inactive" id="44" onclick="sizeClicked(this)">44</span>
+            <span class="forty-five inactive" id="45" onclick="sizeClicked(this)">45</span>
+            <span class="forty-six inactive" id="46" onclick="sizeClicked(this)">46</span>
         </div>
         <div class="desc">
             <p><!--Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque gravida amet consectetur aliquet. Diam nulla potenti cursus aenean aliquet ipsum nec sit ultrices. Quis ultrices non quam orci, mattis non.--></p>
@@ -73,17 +73,32 @@
         getColor.onload = function () {
             var data = JSON.parse(getColor.responseText);
             for (i = 0; i < 20; i++) {
-                var colorVariant = data.product.variants[i].color
+                var colorVariant = data.product.variants[i].color;
+                var quantityVariant = data.product.variants[i].size;
                 if (colorVariant === id) {
                     var variantActive = data.product.variants[i];
-                    console.log(variantActive.image);
-                    img.src = variantActive.image;
-                    break;
+                    /*console.log(i);*/
+                    /*img.src = variantActive.image;*/
+                    /*break;*/
 
+                    if (variantActive.quantity === 0) {
+                        /*console.log('nostock');
+                        console.log(i);
+                        console.log(variantActive.size);*/
+
+                        var sizeNoStock = document.getElementById(variantActive.size);
+                        sizeNoStock.classList.add('unavailable');
+                        sizeNoStock.classList.remove('active');
+
+                        document.getElementById('46').classList.add('active');
+
+                    } else {
+                        console.log(variantActive.size + ' ' + variantActive.price);
+
+                    }
                 }
             }
         }
-
         getColor.send();
     }
 
@@ -97,7 +112,29 @@
             mySize.classList.add('active');
             mySize.classList.remove('inactive');
         }
+
+        var getSize = new XMLHttpRequest();
+        getSize.open('GET', 'https://lugus-hiring.frb.io/product', true);
+
+        getSize.onload = function () {
+            var data = JSON.parse(getSize.responseText);
+            var colorActive = document.querySelector('.color > .active').classList[0];
+            console.log(mySize.id);
+            console.log(colorActive);
+
+            for (i = 0; i < 20; i++) {
+                var variants = data.product.variants[i];
+                if (variants.size === mySize.id && variants.color === colorActive) {
+                    console.log(variants.price);
+                    var editPrice = document.querySelector('.price > span');
+                    editPrice.textContent = variants.price + '€';
+                }
+            }
+        }
+
+        getSize.send();
     }
+
 
 </script>
 
